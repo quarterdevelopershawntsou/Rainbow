@@ -29,7 +29,6 @@ class PreviewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    
     override func viewDidLoad() {
         
         imageView = UIImageView(image: image)
