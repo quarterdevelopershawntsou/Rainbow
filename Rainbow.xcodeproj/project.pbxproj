@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		2998258721AF938C00DD7AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998258621AF938C00DD7AFF /* AppDelegate.swift */; };
 		2998258921AF938C00DD7AFF /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998258821AF938C00DD7AFF /* CameraController.swift */; };
-		2998258E21AF938E00DD7AFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2998258D21AF938E00DD7AFF /* Assets.xcassets */; };
 		2998259121AF938E00DD7AFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2998258F21AF938E00DD7AFF /* LaunchScreen.storyboard */; };
+		299EF60E21BA0CD0007BEBEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2998258D21AF938E00DD7AFF /* Assets.xcassets */; };
+		29F2845421B8B7530039D80E /* PreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F2845321B8B7530039D80E /* PreviewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		2998258D21AF938E00DD7AFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2998259021AF938E00DD7AFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2998259221AF938E00DD7AFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29F2845321B8B7530039D80E /* PreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				2998258621AF938C00DD7AFF /* AppDelegate.swift */,
 				2998258821AF938C00DD7AFF /* CameraController.swift */,
+				29F2845321B8B7530039D80E /* PreviewController.swift */,
 				2998258D21AF938E00DD7AFF /* Assets.xcassets */,
 				2998258F21AF938E00DD7AFF /* LaunchScreen.storyboard */,
 				2998259221AF938E00DD7AFF /* Info.plist */,
@@ -119,8 +122,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				299EF60E21BA0CD0007BEBEC /* Assets.xcassets in Resources */,
 				2998259121AF938E00DD7AFF /* LaunchScreen.storyboard in Resources */,
-				2998258E21AF938E00DD7AFF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29F2845421B8B7530039D80E /* PreviewController.swift in Sources */,
 				2998258921AF938C00DD7AFF /* CameraController.swift in Sources */,
 				2998258721AF938C00DD7AFF /* AppDelegate.swift in Sources */,
 			);

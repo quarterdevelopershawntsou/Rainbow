@@ -20,26 +20,47 @@ class CameraController: UIViewController {
     
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     
+    var image: UIImage?
+    
+    let camera: UIButton = {
+        let camera = UIButton(type: .custom)
+        camera.backgroundColor = UIColor.clear
+        camera.setImage(UIImage(named: "capture"), for: .normal)
+//        camera.setBackgroundImage(UIImage(named: "capture"), for: .normal)
+        // Button dimensions
+//        let cameraButtonDimension = CGFloat(75.0)
+//        camera.frame.size.height = cameraButtonDimension
+//        camera.frame.size.width = cameraButtonDimension
+//        camera.layer.cornerRadius = cameraButtonDimension/2
+//        camera.layer.borderWidth = 10
+        camera.addTarget(self, action: #selector(captureImage), for: .touchUpInside)
+        return camera
+    }()
+    
+    @objc func captureImage() {
+        print("camera clicked")
+        let settings = AVCapturePhotoSettings()
+        // Capture photo
+        photoOutput?.capturePhoto(with: settings, delegate: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //prompt user with choice of camera vs photos from album
         
-        
         //prompt user with camera
         setupCaptureSession()
-        print("setup capture session")
         setupDevice()
-        print("setup Device")
         setupInputOutput()
-        print("sentup input output")
         setuptPreviewLayer()
-        print("setupt Preview layer")
         startRunningCaptureSession()
-        print("start running capture session")
         
-        // Camera button
-        cameraButton()
+        // Buttons and Views subview
+        self.view.addSubview(camera)
+        
+        // Setup Layout
+        setupCameraButtonLayout()
         
     }
 
@@ -62,10 +83,13 @@ class CameraController: UIViewController {
     
     func setupInputOutput(){
         do {
-        let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
-        captureSession.addInput(captureDeviceInput)
-        photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])] , completionHandler: nil)
-        
+            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
+            captureSession.addInput(captureDeviceInput)
+            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])] , completionHandler: nil)
+            photoOutput = AVCapturePhotoOutput()
+            photoOutput?.isHighResolutionCaptureEnabled = true
+            // Set output on the capture session
+            captureSession.addOutput(photoOutput!)
         } catch{
             print(error)
         }
@@ -83,27 +107,28 @@ class CameraController: UIViewController {
         captureSession.startRunning()
     }
     
-    func cameraButton(){
-        let camera = UIButton(type: .custom)
-        let cameraButtonDimension = CGFloat(75.0)
-        camera.backgroundColor = UIColor.clear
-        // Button dimensions
-        camera.frame.size.height = cameraButtonDimension
-        camera.frame.size.width = cameraButtonDimension
-        camera.layer.cornerRadius = cameraButtonDimension/2
-        camera.layer.borderWidth = 10
-        // Button position
-        camera.center.x = view.center.x
-        camera.center.y = view.center.y*1.7
-        self.view.addSubview(camera)
-        
-        // Button action
-        camera.addTarget(self, action: #selector(self.captureImage), for: .touchUpInside)
-        
+    func setupCameraButtonLayout(){
+        // Button layout
+        camera.translatesAutoresizingMaskIntoConstraints = false
+        camera.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        camera.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+//        camera.widthAnchor.constraint(equalToConstant: 75).isActive = true
+//        camera.heightAnchor.constraint(equalToConstant: 75).isActive = true
     }
     
-    @objc func captureImage() {
-        print("camera clicked")
-    }
 }
 
+extension UIViewController: AVCapturePhotoCaptureDelegate{
+    public func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        print("capture photo")
+        if let imageData = photo.fileDataRepresentation(){
+            guard let image = UIImage(data: imageData) else {return}
+            // Save Image
+            // UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            let vc = PreviewController()
+            vc.image = image
+            self.present(vc, animated: true, completion: nil)
+        }
+        
+    }
+}
